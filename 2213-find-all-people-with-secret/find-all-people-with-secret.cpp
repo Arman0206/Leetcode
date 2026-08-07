@@ -89,6 +89,7 @@ while(!q.empty()){
         continue;
         int p1=get(0);
         int p2=get(it);
+    visited.insert(it);
        
         if(p1!=p2)
         merge(p1,p2);
