@@ -76,8 +76,10 @@ for(auto &it:s){
     int p1=get(0);
     int p2=get(it);
  
-    if(p1==p2)
+    if(p1==p2){
     q.push(it);
+    visited.insert(it);
+    }
 }
 while(!q.empty()){
     int node=q.front();
