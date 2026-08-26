@@ -1,7 +1,7 @@
 class Solution {
 public:
 int maxi;
-map<int,int> mp;
+unordered_map<int,int> mp;
 vector<int> val;
 vector<int> val2;
 vector<int> val3;
