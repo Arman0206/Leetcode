@@ -23,12 +23,11 @@ ans=max(ans,update(2*index,l,mid,left,right));
     if(right>mid){
 ans=max(ans,update(2*index+1,mid+1,r,left,right));
     }
-    return sg[index]=max(sg[2*index],sg[2*index+1]);
+     return sg[index]=max(sg[2*index],sg[2*index+1]);
 }
 int query(int index,int l,int r,int left ,int right){
 if(left<=l && right>=r)
 return sg[index];
-
 int ans=0;
 int mid=(l+r)/2;
  if(left<=mid){
@@ -47,25 +46,13 @@ ans=max(ans,query(2*index+1,mid+1,r,left,right));
         mp[v2[i]]=max(mp[v2[i]],v1[i]);
     }
 
-map<int,vector<int>> adj2;
+map<int,vector<int>> adj;
 //adj to remove during query ie set value to
 for(auto &it:mp){
-    adj2[it.second].push_back(it.first);
+    adj[it.second].push_back(it.first);
     v.push_back({it.second+it.first});
 
     mp[it.first]=v.size()-1;
-}
-int k=0;
-int check=adj2.size()-1;
-vector<int> val;
-vector<vector<int>> adj;
-for(auto &it:adj2){
-    val.push_back(it.first);
-    vector<int> temp;
-    for(auto &e:it.second)
-    temp.push_back(e);
-    adj.push_back(temp);
-
 }
 
 int x=v.size();
@@ -89,19 +76,20 @@ for(auto &e:q){
     int a=e[0];
     int b=e[1];
     int ind=e[2];
-    //erase--point update summation=o(n)
-    while(k<=check){
-if(val[k]>=a)
+    //erase--point update
+    auto it=adj.begin();
+    while(it!=adj.end()){
+if(it->first>=a)
 break;
-for(auto &itt:adj[k]){
+for(auto &itt:it->second){
     update(1,0,x-1,mp[itt],mp[itt]);
 }
-k++;
+adj.erase(it);
+it=adj.begin();
     }
-
-auto ittt=mp.lower_bound(b);//logn
+auto ittt=mp.lower_bound(b);
 if(ittt!=mp.end())
-ans[ind]=query(1,0,x-1,ittt->second,x-1);//logn
+ans[ind]=query(1,0,x-1,ittt->second,x-1);
 if(!ans[ind])
 ans[ind]=-1;
 }
